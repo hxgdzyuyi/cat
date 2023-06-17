@@ -85,6 +85,10 @@ defmodule CatRepo.Migrations.InitCatTable do
   end
 
   def down do
+    drop table("statements")
+    drop table("properties")
+    drop table("subjects")
+    drop table("instances")
     drop table("pictures")
   end
 end
