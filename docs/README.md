@@ -1,9 +1,25 @@
 # TODO
 
-- [ ] 确认 eav 模型的 datetype 的关联类型
+## Milestone 1: 文档，项目初始化
+
+- [x] 确认 eav 模型的 datetype 的关联类型
+- [ ] 初始化 phoenix
 - [ ] 构建 models
-- [ ] 编写 Seed
-- [ ] SQL 模拟：
+- [ ] SQL 实现：详情页，列表筛选页
+- [ ] 决定是否使用 liveview
+
+## Milestone 2: 录入手术信息
+
+- [ ] 为《手术与操作编码标准》创建 schema 的 seed
+- [ ] 编写导入脚本，导入《手术与操作编码标准》
+
+## Milestone 3: 条目编辑，创建和筛选条目
+
+- [ ] 添加 /subjects/{id}，实现条目详情的简单介绍
+- [ ] 添加 /subjects/{id}/edit，实现条目详情的简单介绍
+- [ ] 添加 /search，接入搜索
+- [ ] 添加 /new_subject， 添加条目
+- [ ] 添加 /explore， 筛选页
 
 # 资料
 
@@ -32,3 +48,7 @@ https://yegorshytikov.medium.com/magento-eav-database-architecture-20b25c09af98
     基于时间的限定符，如发布日期(P577)来限定软件版本标识符(P348)值
 
 EntitySchema 实体架构: https://www.wikidata.org/wiki/Wikidata:Database_reports/EntitySchema_directory
+
+## 《手术与操作编码标准》
+
+http://www.nhc.gov.cn/cmsresources/mohbgt/cmsrsdocument/doc16707.pdf
