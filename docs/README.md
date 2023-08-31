@@ -52,3 +52,9 @@ EntitySchema 实体架构: https://www.wikidata.org/wiki/Wikidata:Database_repor
 ## 《手术与操作编码标准》
 
 http://www.nhc.gov.cn/cmsresources/mohbgt/cmsrsdocument/doc16707.pdf
+
+## 手术操作分类代码国家临床版3.0.xlsx
+
+https://www.xyeyy.com/5/40/126/588/content_65614.html
+
+http://www.nhc.gov.cn/wjw/wsbzxx/wsbz.shtml

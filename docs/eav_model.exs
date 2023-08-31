@@ -52,7 +52,7 @@ defmodule CatRepo.Migrations.InitCatTable do
 
       add :title, :string, comment: "条目标题"
       add :summary, :string, comment: "条目简介"
-      add :aliases, {:array, :map}, comment: "条目简介"
+      add :aliases, {:array, :map}, comment: "条目别名"
 
       add :cover_id, references("pictures"), comment: "封面图"
 
