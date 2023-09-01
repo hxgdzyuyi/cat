@@ -3,7 +3,7 @@
 ## Milestone 1: 文档，项目初始化
 
 - [x] 确认 eav 模型的 datetype 的关联类型
-- [ ] 初始化 phoenix
+- [x] 初始化 phoenix
 - [ ] 构建 models
 - [ ] SQL 实现：详情页，列表筛选页
 - [ ] 决定是否使用 liveview
