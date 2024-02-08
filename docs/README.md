@@ -6,9 +6,14 @@
 - [x] 初始化 phoenix
 - [ ] 构建 models
 - [ ] SQL 实现：详情页，列表筛选页
-- [ ] 决定是否使用 liveview
+- [x] 决定是否使用 liveview
 
-## Milestone 2: 录入手术信息
+## Milestone 2: 添加 User
+
+- [ ] 添加用户注册
+- [ ] 用户头像信息替换
+
+## Milestone 3: 录入手术信息
 
 - [ ] 为《手术与操作编码标准》创建 schema 的 seed
 - [ ] 编写导入脚本，导入《手术与操作编码标准》
