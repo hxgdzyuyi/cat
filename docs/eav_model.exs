@@ -25,14 +25,20 @@ defmodule CatRepo.Migrations.InitCatTable do
           - [(:scheduled, 将做),(:done, 做过)]
   """
   def up do
-    create table("pictures") do
+    create table("files") do
       add :key, :string
-      add :width, :integer
-      add :height, :integer
+      add :size, :integer, default: 0
+      add :width, :integer, default: 0
+      add :height, :integer, default: 0
 
-      add :file_mime, :string
-      add :file_size,  :integer
+      # media_type: enum('UNKNOWN','BITMAP','DRAWING','AUDIO','VIDEO','MULTIMEDIA','OFFICE','TEXT','EXECUTABLE','ARCHIVE','3D')
+      add :media_type, :string
+      # major_mime: enum('UNKNOWN','application','audio','image','message','model','multipart','text','video')
+      add :major_mime, :string
+      add :minor_mime, :string
+      add :sha1, :string
 
+      # license: enum('UNKNOWN','COPYRIGHTED','PUBLIC_DOMAIN','CC','GPL','LGPL','BSD','APACHE','MIT','MPL','PUBLIC_DOMAIN_MARK','UNLICENSE')
       add :license, :string
 
       timestamps()
@@ -54,7 +60,7 @@ defmodule CatRepo.Migrations.InitCatTable do
       add :summary, :string, comment: "条目简介"
       add :aliases, {:array, :map}, comment: "条目别名"
 
-      add :cover_id, references("pictures"), comment: "封面图"
+      add :cover_id, references("files"), comment: "封面图"
 
       timestamps()
     end
@@ -77,7 +83,7 @@ defmodule CatRepo.Migrations.InitCatTable do
       add :value_int, :integer
       add :value_decimal, :decimal
       add :value_text, :text
-      add :value_picture_id, references("pictures")
+      add :value_file_id, references("files")
 
       timestamps()
     end
@@ -89,6 +95,6 @@ defmodule CatRepo.Migrations.InitCatTable do
     drop table("properties")
     drop table("subjects")
     drop table("instances")
-    drop table("pictures")
+    drop table("files")
   end
 end
