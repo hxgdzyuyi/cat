@@ -39,3 +39,6 @@ npm-debug.log
 .env.test
 .DS_Store
 .envrc
+
+/frontend/node_modules/
+/frontend/.vite/

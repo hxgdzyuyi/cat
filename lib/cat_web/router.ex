@@ -20,7 +20,9 @@ defmodule CatWeb.Router do
   scope "/", CatWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    unless Application.compile_env(:cat, :dev_routes) do
+      get "/", PageController, :home
+    end
   end
 
   # Other scopes may use custom stacks.
@@ -76,5 +78,13 @@ defmodule CatWeb.Router do
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :edit
     post "/users/confirm/:token", UserConfirmationController, :update
+  end
+
+  scope "/" do
+    pipe_through :browser
+
+    if Application.compile_env(:cat, :dev_routes) do
+      forward "/", ReverseProxyPlug, upstream: "http://localhost:5173"
+    end
   end
 end
