@@ -1,5 +1,6 @@
 defmodule CatWeb.Router do
   use CatWeb, :router
+  require Logger
 
   import CatWeb.UserAuth
 
@@ -9,6 +10,15 @@ defmodule CatWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {CatWeb.Layouts, :root}
     plug :protect_from_forgery
+    plug :put_secure_browser_headers
+    plug :fetch_current_user
+  end
+
+  pipeline :frontend do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :put_root_layout, html: {CatWeb.Layouts, :root}
     plug :put_secure_browser_headers
     plug :fetch_current_user
   end
@@ -80,11 +90,17 @@ defmodule CatWeb.Router do
     post "/users/confirm/:token", UserConfirmationController, :update
   end
 
-  scope "/" do
-    pipe_through :browser
+  if Application.compile_env(:cat, :dev_routes) do
+    scope "/" do
+      pipe_through :frontend
 
-    if Application.compile_env(:cat, :dev_routes) do
-      forward "/", ReverseProxyPlug, upstream: "http://localhost:5173"
+      forward "/", ReverseProxyPlug,
+        upstream: "http://127.0.0.1:5173",
+        error_callback: &__MODULE__.log_reverse_proxy_error/1
+
+      def log_reverse_proxy_error(error) do
+        Logger.warning("ReverseProxyPlug network error: #{inspect(error)}")
+      end
     end
   end
 end

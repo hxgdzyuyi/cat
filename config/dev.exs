@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :cat, Cat.Repo,
-  username:  System.get_env("DB_USER"),
+  username: System.get_env("DB_USER"),
   password: System.get_env("DB_PASS"),
   hostname: System.get_env("DB_HOST"),
   port: System.get_env("DB_PORT") || "5432",
