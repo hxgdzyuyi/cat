@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.sass'
+import RegisterPage from "./pages/RegisterPage"
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,8 +9,8 @@ import {
 
 const router = createBrowserRouter([
   {
-    path: "/auth/log_in",
-    element: <div>Login</div>,
+    path: "/auth/register",
+    element: <RegisterPage />,
   },
 ]);
 
