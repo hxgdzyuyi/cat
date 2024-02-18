@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
+import useBodyClassName from "../hooks/useBodyClassName";
 
 function RegisterCard() {
   return (
@@ -28,8 +29,10 @@ function RegisterCard() {
 }
 
 export default () => {
+  useBodyClassName("register-page");
+
   return (
-    <section className="main">
+    <section className="register-container">
       <RegisterCard />
     </section>
   );
