@@ -7,51 +7,124 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import useBodyClassName from "../hooks/useBodyClassName";
+import { Form, Field } from "react-final-form";
+import {
+  required,
+  mustBeEmail,
+  maxLength,
+  minLength,
+  mustBeRegex,
+  composeValidators,
+} from "../mods/validator";
 
-function TextField({ id, label, helperText, inputType }) {
-  inputType = inputType || "input"
+function TextField({
+  id,
+  name,
+  label,
+  helperText,
+  inputType,
+  autoComplete,
+  validate,
+}) {
+  inputType = inputType || "input";
+  id = id || name;
 
   return (
-    <div className="form-group">
-      <label htmlFor={id}>{label}</label>
-      <input
-        type={inputType}
-        className="form-control"
-        id={id}
-        placeholder={label}
-      />
-      <small id={`${id}-helper`} className="helper-text">
-        {helperText}
-      </small>
-    </div>
+    <Field name={name} validate={validate}>
+      {(props) => (
+        <div className="form-group">
+          <label htmlFor={id}>{label}</label>
+          <input
+            type={inputType}
+            className="form-control"
+            id={id}
+            placeholder={label}
+            autoComplete={autoComplete}
+            {...props.input}
+          />
+          {props.meta.error && props.meta.touched ? (
+            <small className="error-message">{props.meta.error}</small>
+          ) : (
+            <small className="helper-text">{helperText}</small>
+          )}
+        </div>
+      )}
+    </Field>
   );
 }
 
 function RegisterCard() {
+  const onSubmit = async (values) => {
+    console.log(JSON.stringify(values, 0, 2));
+    return false;
+  };
+
   return (
-    <div className="card-container">
-      <div className="card-title">用户注册</div>
-      <div className="card-content">
-        <form style={{ marginTop: "20px" }}>
-          <TextField id="email" inputType="email" label="邮箱" helperText="不会在公开地方展示" />
-          <TextField
-            id="username"
-            label="用户ID"
-            helperText="唯一英文ID,不能使用空格,短"
-          />
-          <TextField id="name" label="昵称" helperText="昵称，用户名" />
-          <TextField id="password" inputType="password" label="密码" helperText="最少10位" />
+    <Form
+      onSubmit={onSubmit}
+      render={({ handleSubmit, form, submitting, pristine, values }) => (
+        <form onSubmit={handleSubmit}>
+          <div className="card-container">
+            <div className="card-title">用户注册</div>
+            <div className="card-content">
+              <div style={{ marginTop: "20px" }}>
+                <TextField
+                  name="email"
+                  inputType="email"
+                  validate={composeValidators(required, mustBeEmail)}
+                  label="邮箱"
+                  helperText="不会在公开地方展示"
+                />
+                <TextField
+                  name="username"
+                  label="用户ID"
+                  helperText="唯一英文ID,不能使用空格,短"
+                  validate={composeValidators(
+                    required,
+                    mustBeRegex(
+                      /[0-9a-zA-Z]/i,
+                      "正确的格式为英文或数字，不能有空格，全站唯一",
+                    ),
+                    minLength(3),
+                    maxLength(10),
+                  )}
+                />
+                <TextField
+                  name="nickname"
+                  label="昵称"
+                  helperText="昵称，用户名"
+                  validate={composeValidators(
+                    required,
+                    minLength(3),
+                    maxLength(10),
+                  )}
+                />
+                <TextField
+                  name="password"
+                  inputType="password"
+                  label="密码"
+                  helperText="最少10位"
+                  autoComplete="on"
+                  validate={composeValidators(
+                    required,
+                    minLength(10),
+                    maxLength(20),
+                  )}
+                />
+              </div>
+            </div>
+            <div className="card-actions">
+              <button className="form-button-cancel" type="button">
+                登录
+              </button>
+              <button className="form-button-submit" type="submit">
+                提交
+              </button>
+            </div>
+          </div>
         </form>
-      </div>
-      <div className="card-actions">
-        <button className="form-button-cancel" type="button">
-          取消
-        </button>
-        <button className="form-button-submit" type="submit">
-          提交
-        </button>
-      </div>
-    </div>
+      )}
+    />
   );
 }
 
