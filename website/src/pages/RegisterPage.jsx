@@ -8,17 +8,19 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import useBodyClassName from "../hooks/useBodyClassName";
 
-function TextField({ id, label, helperText }) {
+function TextField({ id, label, helperText, inputType }) {
+  inputType = inputType || "input"
+
   return (
     <div className="form-group">
-      <label for={id}>{label}</label>
+      <label htmlFor={id}>{label}</label>
       <input
-        type="input"
+        type={inputType}
         className="form-control"
         id={id}
         placeholder={label}
       />
-      <small id="{`${id}-helper`}" className="helper-text">
+      <small id={`${id}-helper`} className="helper-text">
         {helperText}
       </small>
     </div>
@@ -31,14 +33,14 @@ function RegisterCard() {
       <div className="card-title">用户注册</div>
       <div className="card-content">
         <form style={{ marginTop: "20px" }}>
-          <TextField id="email" label="邮箱" helperText="不会在公开地方展示" />
+          <TextField id="email" inputType="email" label="邮箱" helperText="不会在公开地方展示" />
           <TextField
             id="username"
             label="用户ID"
             helperText="唯一英文ID,不能使用空格,短"
           />
           <TextField id="name" label="昵称" helperText="昵称，用户名" />
-          <TextField id="password" label="密码" helperText="最少10位" />
+          <TextField id="password" inputType="password" label="密码" helperText="最少10位" />
         </form>
       </div>
       <div className="card-actions">
