@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import useBodyClassName from "../hooks/useBodyClassName";
 import { Form, Field } from "react-final-form";
+import { FORM_ERROR } from "final-form";
 import {
   required,
   mustBeEmail,
@@ -16,6 +17,7 @@ import {
   mustBeRegex,
   composeValidators,
 } from "../mods/validator";
+import axios from 'axios';
 
 function TextField({
   id,
@@ -43,9 +45,9 @@ function TextField({
             {...props.input}
           />
           {props.meta.error && props.meta.touched ? (
-            <small className="error-message">{props.meta.error}</small>
+            <small className="error-helper">{props.meta.error}</small>
           ) : (
-            <small className="helper-text">{helperText}</small>
+            <small className="normal-helper">{helperText}</small>
           )}
         </div>
       )}
@@ -54,15 +56,19 @@ function TextField({
 }
 
 function RegisterCard() {
-  const onSubmit = async (values) => {
-    console.log(JSON.stringify(values, 0, 2));
-    return false;
+  const onSubmit = (values) => {
+    return axios.post('/j/users/register', { user: values }).then(
+      () => {},
+      (error) => {
+        return { [FORM_ERROR]: error.message || "发生了奇怪的错误" };
+      }
+    )
   };
 
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, form, submitting, pristine, values }) => (
+      render={({ handleSubmit, form, submitting, pristine, values, submitError }) => (
         <form onSubmit={handleSubmit}>
           <div className="card-container">
             <div className="card-title">用户注册</div>
@@ -112,6 +118,8 @@ function RegisterCard() {
                   )}
                 />
               </div>
+
+              {submitError && <div className="error-message">{submitError}</div>}
             </div>
             <div className="card-actions">
               <button className="form-button-cancel" type="button">
