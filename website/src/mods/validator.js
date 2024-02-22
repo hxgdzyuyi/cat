@@ -30,9 +30,9 @@ export const mustBeRegex = (regex, errorMessage) => (value) => {
 };
 
 export const composeValidators =
-  (...validators) =>
-  (value) =>
-    validators.reduce(
-      (error, validator) => error || validator(value),
-      undefined,
-    );
+  (...validators) => undefined
+  //(value) =>
+    //validators.reduce(
+      //(error, validator) => error || validator(value),
+      //undefined,
+    //);

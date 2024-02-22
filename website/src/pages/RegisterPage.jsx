@@ -57,7 +57,7 @@ function TextField({
 
 function RegisterCard() {
   const onSubmit = (values) => {
-    return axios.post('/j/users/register', { user: values }).then(
+    return axios.post('/api/users/register', { user: values }).then(
       () => {},
       (error) => {
         return { [FORM_ERROR]: error.message || "发生了奇怪的错误" };

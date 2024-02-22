@@ -36,9 +36,11 @@ defmodule CatWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", CatWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", CatWeb do
+    pipe_through :api
+
+    post "/users/register", UserRegistrationController, :create
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:cat, :dev_routes) do
