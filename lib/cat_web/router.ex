@@ -25,6 +25,8 @@ defmodule CatWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
   end
 
   scope "/", CatWeb do
