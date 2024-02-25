@@ -2,6 +2,8 @@ import * as React from "react";
 import useBodyClassName from "../hooks/useBodyClassName";
 import { Form, Field } from "react-final-form";
 import { FORM_ERROR } from "final-form";
+import { changeUser } from '../features/user/userSlice'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   required,
   mustBeEmail,
@@ -14,9 +16,17 @@ import axios from "axios";
 import TextField from "../components/TextField";
 
 function LoginForm() {
+  const dispatch = useDispatch()
   const onSubmit = (values) => {
     return axios.post("/api/users/log_in", { user: values }).then(
-      () => {},
+      ({ data }) => {
+        if (data && data.data) {
+          const { user } = data.data;
+          dispatch(changeUser(user));
+        } else {
+          //TODO: error
+        }
+      },
       (error) => {
         let formErrors = {}
         if (error.response) {

@@ -17,6 +17,7 @@ defmodule CatWeb.UserSessionController do
       conn
       |> put_flash(:info, "Welcome back!")
       |> UserAuth.log_in_user(user, user_params)
+      |> render(:create, user: user)
     else
       # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
       {:error, :unauthorized, %{message: "Invalid email or password"}}
