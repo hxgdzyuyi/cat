@@ -42,6 +42,7 @@ defmodule CatWeb.Router do
     pipe_through :api
 
     post "/users/register", UserRegistrationController, :create
+    post "/users/log_in", UserSessionController, :create
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

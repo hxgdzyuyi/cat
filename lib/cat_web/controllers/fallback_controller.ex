@@ -15,6 +15,13 @@ defmodule CatWeb.FallbackController do
     |> render(:"403")
   end
 
+  def call(conn, {:error, status_code, %{message: message}}) do
+    conn
+    |> put_status(status_code)
+    |> put_view(json: CatWeb.ErrorJSON)
+    |> render(:error, message: message)
+  end
+
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)

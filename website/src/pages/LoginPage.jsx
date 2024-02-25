@@ -12,18 +12,25 @@ import {
 } from "../mods/validator";
 import axios from "axios";
 import TextField from "../components/TextField";
-import { useNavigate } from "react-router-dom";
 
-function RegisterForm() {
+function LoginForm() {
   const onSubmit = (values) => {
-    return axios.post("/api/users/register", { user: values }).then(
+    return axios.post("/api/users/log_in", { user: values }).then(
       () => {},
       (error) => {
-        return { [FORM_ERROR]: error.message || "发生了奇怪的错误" };
+        let formErrors = {}
+        if (error.response) {
+          const { message } = error.response.data || {}
+
+          if (message) {
+            formErrors[FORM_ERROR] = message
+          }
+        }
+
+        return formErrors;
       },
     );
   };
-  const navigate = useNavigate();
 
   return (
     <Form
@@ -38,7 +45,7 @@ function RegisterForm() {
       }) => (
         <form onSubmit={handleSubmit}>
           <div className="card-container">
-            <div className="card-title">用户注册</div>
+            <div className="card-title">用户登录</div>
             <div className="card-content">
               <div style={{ marginTop: "20px" }}>
                 <TextField
@@ -46,37 +53,11 @@ function RegisterForm() {
                   inputType="email"
                   validate={composeValidators(required, mustBeEmail)}
                   label="邮箱"
-                  helperText="不会在公开地方展示"
-                />
-                <TextField
-                  name="username"
-                  label="用户ID"
-                  helperText="唯一英文ID,不能使用空格,短"
-                  validate={composeValidators(
-                    required,
-                    mustBeRegex(
-                      /[0-9a-zA-Z]/i,
-                      "正确的格式为英文或数字，不能有空格，全站唯一",
-                    ),
-                    minLength(3),
-                    maxLength(10),
-                  )}
-                />
-                <TextField
-                  name="nickname"
-                  label="昵称"
-                  helperText="昵称，用户名"
-                  validate={composeValidators(
-                    required,
-                    minLength(3),
-                    maxLength(10),
-                  )}
                 />
                 <TextField
                   name="password"
                   inputType="password"
                   label="密码"
-                  helperText="最少10位"
                   autoComplete="on"
                   validate={composeValidators(
                     required,
@@ -94,9 +75,9 @@ function RegisterForm() {
               <button
                 className="form-button-cancel"
                 type="button"
-                onClick={() => navigate("/auth/log_in")}
+                onClick={form.restart}
               >
-                登录
+                重置
               </button>
               <button className="form-button-submit" type="submit">
                 提交
@@ -110,11 +91,11 @@ function RegisterForm() {
 }
 
 export default () => {
-  useBodyClassName("register-page");
+  useBodyClassName("login-page");
 
   return (
-    <section className="register-container">
-      <RegisterForm />
+    <section className="login-container">
+      <LoginForm />
     </section>
   );
 };
