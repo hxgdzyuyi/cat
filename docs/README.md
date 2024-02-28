@@ -1,5 +1,10 @@
 # TODO
 
+## Milestone 0: Design Demos
+
+参考: https://doc.wikimedia.org/oojs-ui/master/demos/
+
+
 ## Milestone 1: 文档，项目初始化
 
 - [x] 确认 eav 模型的 datetype 的关联类型
@@ -10,7 +15,7 @@
 
 ## Milestone 2: 添加 User
 
-- [ ] 添加用户注册
+- [x] 添加用户注册
 - [ ] 用户头像信息替换
 
 ## Milestone 3: 录入手术信息
